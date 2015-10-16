@@ -1,0 +1,7 @@
+{
+  "name": "MEAN-REST-API",
+  "version": "0.0.0",
+  "description": "A very basic REST API using the MEAN Stack",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE.md"
+}
