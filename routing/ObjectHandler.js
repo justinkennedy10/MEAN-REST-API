@@ -1,7 +1,8 @@
 var winston = require('winston');
 var express = require('express');
+var bodyParser = require('body-parser');
 
-var Mongo = require('./database/Mongo');
+var Mongo = require('./../database/Mongo');
 
 var router = express.Router();
 

@@ -3,7 +3,7 @@ var assert = require('assert');
 var winston = require('winston');
 var MongoClient = require('mongodb').MongoClient;
 
-var Mongo = {};
+var Mongo = function(){}
 
 Mongo.prototype.getAllObjectUIDs = function(){
 

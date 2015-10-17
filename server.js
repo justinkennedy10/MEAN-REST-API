@@ -1,6 +1,5 @@
 var winston = require('winston');
 var express = require('express');
-var bodyParser = require('body-parser');
 
 var ObjectHandler = require('./routing/ObjectHandler');
 var WebHandler = require('./routing/WebHandler');
