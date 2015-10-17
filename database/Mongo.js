@@ -5,23 +5,23 @@ var MongoClient = require('mongodb').MongoClient;
 
 var Mongo = function(){}
 
-Mongo.prototype.getAllObjectUIDs = function(){
-  
-};
-
-Mongo.prototype.getObjectWithUID = function(uid){
+Mongo.prototype.getAllObjectUIDs = function(cb){
 
 };
 
-Mongo.prototype.createObject = function(obj){
+Mongo.prototype.getObjectWithUID = function(uid, cb){
 
 };
 
-Mongo.prototype.updateObject = function(uid){
+Mongo.prototype.createObject = function(obj, cb){
 
 };
 
-Mongo.prototype.deleteObject = function(uid){
+Mongo.prototype.updateObject = function(uid, obj, cb){
+
+};
+
+Mongo.prototype.deleteObject = function(uid, cb){
 
 };
 
