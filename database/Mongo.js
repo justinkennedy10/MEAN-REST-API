@@ -6,7 +6,7 @@ var MongoClient = require('mongodb').MongoClient;
 var Mongo = function(){}
 
 Mongo.prototype.getAllObjectUIDs = function(){
-
+  
 };
 
 Mongo.prototype.getObjectWithUID = function(uid){

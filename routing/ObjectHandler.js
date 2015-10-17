@@ -12,7 +12,7 @@ router.use(bodyParser.json());
 
 //Handle Requests
 router.get('/', function(req, res){
-
+  
 });
 
 router.get('/:uid', function(req, res){
