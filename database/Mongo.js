@@ -29,7 +29,7 @@ Mongo.getAllObjectUIDs = function(cb){
       }, null);
     } else {
       var list = [];
-      results.forEach(function(result){
+      results.ops.forEach(function(result){
         list.push(result['_id']);
       });
       cb(null, list);
@@ -46,12 +46,13 @@ Mongo.getObjectWithUID = function(uid, cb){
         'message': err.message
       }, null);
     } else {
-
+      cb(null, result.ops[0].renameProperty('_id', uid));
     }
   });
 };
 
 Mongo.createObject = function(obj, cb){
+  console.log(obj);
   objects.insertOne(obj, function(err, result){
     if(err){
       cb({
@@ -60,7 +61,7 @@ Mongo.createObject = function(obj, cb){
           'message': err.message
       }, null);
     } else {
-      cb(null, result.renameProperty('_id', 'uid'));
+      cb(null, result.ops[0].renameProperty('_id', 'uid'));
     }
   });
 };
@@ -74,7 +75,7 @@ Mongo.updateObject = function(uid, obj, cb){
         'message': err.message
       }, null);
     } else {
-      cb(null, result.renameProperty('_id', 'uid'));
+      cb(null, result.ops[0].renameProperty('_id', 'uid'));
     }
   });
 };

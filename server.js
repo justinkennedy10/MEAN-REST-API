@@ -1,6 +1,6 @@
 /*
 TODO
-make rest calls return right thing
+figure out postman sending json to server
 change ip in error messages
 angular web app
 */
