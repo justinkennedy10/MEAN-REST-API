@@ -20,7 +20,7 @@ Object.prototype.renameProperty = function (oldName, newName) {
 };
 
 Mongo.getAllObjectUIDs = function(cb){
-  objects.find(function(err, results){
+  objects.find().toArray(function(err, results){
     if(err){
       cb({
         'verb': 'GET',
@@ -29,7 +29,7 @@ Mongo.getAllObjectUIDs = function(cb){
       }, null);
     } else {
       var list = [];
-      results.ops.forEach(function(result){
+      results.forEach(function(result){
         list.push(result['_id']);
       });
       cb(null, list);
@@ -38,21 +38,20 @@ Mongo.getAllObjectUIDs = function(cb){
 };
 
 Mongo.getObjectWithUID = function(uid, cb){
-  objects.find({'_id': uid}, function(err, result){
+  objects.find().limit(1).next(function(err, result){
     if(err){
       cb({
         'verb': 'GET',
-        'url': 'http://localhost:3000/api/objects/' + uid,
+        'url': 'http://localhost:3000/api/objects' + uid,
         'message': err.message
       }, null);
     } else {
-      cb(null, result.ops[0].renameProperty('_id', uid));
+      cb(null, result);
     }
   });
 };
 
 Mongo.createObject = function(obj, cb){
-  console.log(obj);
   objects.insertOne(obj, function(err, result){
     if(err){
       cb({
@@ -67,7 +66,7 @@ Mongo.createObject = function(obj, cb){
 };
 
 Mongo.updateObject = function(uid, obj, cb){
-  objects.updateOne({'_id': uid}, obj, function(err, result){
+  objects.replaceOne({'_id': uid}, obj, function(err, result){
     if(err){
       cb({
         'verb': 'PUT',
@@ -75,6 +74,7 @@ Mongo.updateObject = function(uid, obj, cb){
         'message': err.message
       }, null);
     } else {
+      console.log(result.ops);
       cb(null, result.ops[0].renameProperty('_id', 'uid'));
     }
   });

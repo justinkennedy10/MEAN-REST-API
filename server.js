@@ -1,8 +1,11 @@
 /*
 TODO
-figure out postman sending json to server
+fix delete and put(include _id)
+fix error handling
 change ip in error messages
 angular web app
+log support
+tests
 */
 
 var winston = require('winston');
