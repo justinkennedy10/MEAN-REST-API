@@ -8,47 +8,43 @@ var Mongo = require('./../database/Mongo');
 var router = express.Router();
 
 //Choose database using config.json
-var database;
-fs.readFile('/../config.json', 'utf8', function (err, data) {
-  if (err) throw err;
-  var db = JSON.parse(data);
-  if(db.databse = 'MongoDB'){
-    databse = Mongo;
-  } else throw new Error('Specify a proper database');
-});
+var database = {};
+if(JSON.parse(fs.readFileSync('config.json', 'utf8'))['database'] == "MongoDB"){
+  database = Mongo;
+} else throw new Error('Please specify a proper database in config.json');
 
 //Middleware
 router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
 
 //Handle Requests
-router.get('/', function(req, res){
-  database.getAllObjectUIDs(function(list){
-    res.json(list);
+router.get('/:uid', function(req, res){
+  database.getObjectWithUID(req.params.uid, function(err, obj){
+    res.json(err || obj);
   });
 });
 
-router.get('/:uid', function(req, res){
-  database.getObjectWithUID(req.params.uid, function(obj){
-    res.json(obj);
+router.get('/', function(req, res){
+  database.getAllObjectUIDs(function(err, list){
+    res.json(err || list);
   });
 });
 
 router.post('/', function(req, res){
-  database.createObject(req.body, function(obj){
-    res.json(obj);
+  database.createObject(req.body, function(err, obj){
+    res.json(err || obj);
   });
 });
 
 router.put('/:uid', function(req, res){
-  database.updateObject(req.params.uid, req.body, function(obj){
-    res.json(obj);
+  database.updateObject(req.params.uid, req.body, function(err, obj){
+    res.json(err || obj);
   });
 });
 
 router.delete('/:uid', function(req, res){
-  database.deleteObject(req.params.uid, function(){
-    res.send('');
+  database.deleteObject(req.params.uid, function(err){
+    res.json(err || {});
   })
 });
 

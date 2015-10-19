@@ -3,26 +3,94 @@ var assert = require('assert');
 var winston = require('winston');
 var MongoClient = require('mongodb').MongoClient;
 
-var Mongo = function(){}
+var objects;
+MongoClient.connect('mongodb://localhost:27017/rest', function(err, db) {
+  if(err) throw err;
+  objects = db.collection('objects');
+});
 
-Mongo.prototype.getAllObjectUIDs = function(cb){
+var Mongo = {};
 
+Object.prototype.renameProperty = function (oldName, newName) {
+    if (this.hasOwnProperty(oldName)) {
+        this[newName] = this[oldName];
+        delete this[oldName];
+    }
+    return this;
 };
 
-Mongo.prototype.getObjectWithUID = function(uid, cb){
-
+Mongo.getAllObjectUIDs = function(cb){
+  objects.find(function(err, results){
+    if(err){
+      cb({
+        'verb': 'GET',
+        'url': 'http://localhost:3000/api/objects/',
+        'message': err.message
+      }, null);
+    } else {
+      var list = [];
+      results.forEach(function(result){
+        list.push(result['_id']);
+      });
+      cb(null, list);
+    }
+  });
 };
 
-Mongo.prototype.createObject = function(obj, cb){
+Mongo.getObjectWithUID = function(uid, cb){
+  objects.find({'_id': uid}, function(err, result){
+    if(err){
+      cb({
+        'verb': 'GET',
+        'url': 'http://localhost:3000/api/objects/' + uid,
+        'message': err.message
+      }, null);
+    } else {
 
+    }
+  });
 };
 
-Mongo.prototype.updateObject = function(uid, obj, cb){
-
+Mongo.createObject = function(obj, cb){
+  objects.insertOne(obj, function(err, result){
+    if(err){
+      cb({
+          'verb': 'POST',
+          'url': 'http://localhost:3000/api/objects',
+          'message': err.message
+      }, null);
+    } else {
+      cb(null, result.renameProperty('_id', 'uid'));
+    }
+  });
 };
 
-Mongo.prototype.deleteObject = function(uid, cb){
+Mongo.updateObject = function(uid, obj, cb){
+  objects.updateOne({'_id': uid}, obj, function(err, result){
+    if(err){
+      cb({
+        'verb': 'PUT',
+        'url': 'http://localhost:3000/api/objects/' + uid,
+        'message': err.message
+      }, null);
+    } else {
+      cb(null, result.renameProperty('_id', 'uid'));
+    }
+  });
+};
 
+Mongo.deleteObject = function(uid, cb){
+  object.deleteOne({'_id': uid}, function(err){
+    if(err){
+      cb({
+        'verb': 'DELETE',
+        'url': 'http://localhost:3000/api/objects/' + uid,
+        'message': err.message
+      });
+    } else {
+      cb(null);
+    }
+  });
 };
 
 module.exports = Mongo;
