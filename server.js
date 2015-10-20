@@ -2,7 +2,6 @@
 TODO
 fix mongo error handling and stuff
 angular web app
-log support
 tests
 */
 

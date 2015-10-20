@@ -6,7 +6,10 @@ var ObjectID = require('mongodb').ObjectID;
 
 var objects;
 MongoClient.connect('mongodb://localhost:27017/rest', function(err, db) {
-  if(err) throw err;
+  if(err) {
+    winston.log('error', 'Could not connect to MongoDB');
+    throw err;
+  }
   objects = db.collection('objects');
 });
 

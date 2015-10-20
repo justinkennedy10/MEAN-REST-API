@@ -1,13 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="restApp">
   <head>
-    <title>Basic REST API</title>
+
+    <title>Simple REST API</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="index.js"></script>
+
   </head>
 
-  <body>
-    <h1>
-      Basic REST API
-    </h1>
+  <body ng-controller="indexController as index">
+    <div class="container">
+
+      <div class='jumbotron'>
+        <h1>Simple REST API</h1>
+        <h2>Using NodeJS, ExpressJS, MongoDB, AngularJS, and Bootstrap</h2>
+        <h3>Made by Justin Kennedy</h3>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-sm-3">
+          <label for="key">Key:</label>
+          <input ng-model="index.key" type="text" class="form-control" id="key">
+        </div>
+        <div class="form-group col-sm-3">
+          <label for="value">Value:</label>
+          <input ng-model="index.value" type="text" class="form-control" id="value">
+        </div>
+      </div><br>
+
+      <div class="row">
+        <button type="button" class="btn btn-info col-sm-3" ng-click="index.createObject(index.key, index.value)">Create New Object</button>
+      </div><br>
+
+      <div class="row">
+        <button type="button" class="btn btn-info col-sm-3" ng-click="index.getObjects()">Refresh</button>
+      </div><br>
+
+
+      <div class="row">
+        <div class="panel-group" id="accordion">
+          <div ng-repeat="object in index.objects" class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{object}}" ng-click="index.getObject(object)" style="text-decoration:none">
+                  {{object}}
+                </a>
+              </h4>
+            </div>
+            <div id="collapse{{object}}" class="panel-collapse collapse">
+              <div class="panel-body">
+                {{index.objectString}}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#!" ng-click="index.updateObject(object, index.key, index.value)">Update</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#" ng-click="index.deleteObject(object)">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </body>
 
 </html>
