@@ -2,7 +2,6 @@
 TODO
 fix mongo error handling and stuff
 tests
-make script for start
 */
 
 var winston = require('winston');

@@ -65,6 +65,4 @@ router.delete('/:uid', function(req, res){
   })
 });
 
-//Errors
-
 module.exports = router

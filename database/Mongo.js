@@ -4,6 +4,7 @@ var winston = require('winston');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 
+//Connect to MongoDB
 var objects;
 MongoClient.connect('mongodb://localhost:27017/rest', function(err, db) {
   if(err) {
@@ -116,5 +117,9 @@ Mongo.deleteObject = function(uid, cb){
     }
   });
 };
+
+Mongo.clearDatabse = function(cb){
+  objects.drop(cb);
+}
 
 module.exports = Mongo;
