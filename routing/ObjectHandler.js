@@ -14,8 +14,19 @@ if(JSON.parse(fs.readFileSync('config.json', 'utf8'))['database'] == "MongoDB"){
 } else throw new Error('Please specify a proper database in config.json');
 
 //Middleware
-router.use(bodyParser.urlencoded({extended: false}));
 router.use(bodyParser.json());
+router.use(function(err, req, res, next){
+  if(err instanceof SyntaxError){
+    res.json({
+      'verb': req.method.toUpperCase(),
+      'url': req.originalURL,
+      'message': 'Not a JSON Object'
+    });
+  } else {
+    next(err);
+  }
+})
+router.use(bodyParser.urlencoded({extended: false}));
 
 //Handle Requests
 router.get('/:uid', function(req, res){
@@ -38,17 +49,13 @@ router.post('/', function(req, res){
 
 router.put('/:uid', function(req, res){
   database.updateObject(req.params.uid, req.body, function(err, obj){
-    if(err){
-      res.json(err);
-    } else {
-      res.json(obj);
-    }
+    res.json(err || obj);
   });
 });
 
 router.delete('/:uid', function(req, res){
   database.deleteObject(req.params.uid, function(err){
-    res.json(err || {});
+    res.json(err || '');
   })
 });
 

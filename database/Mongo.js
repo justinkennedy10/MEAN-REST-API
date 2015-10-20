@@ -25,13 +25,13 @@ Mongo.getAllObjectUIDs = function(cb){
     if(err){
       cb({
         'verb': 'GET',
-        'url': 'http://localhost:3000/api/objects/',
+        'url': '/api/objects/',
         'message': err.message
       }, null);
     } else {
       var list = [];
       results.forEach(function(result){
-        list.push({'url': 'http://localhost:3000/api/objects/' + result['_id']});
+        list.push({'url': '/api/objects/' + result['_id']});
       });
       cb(null, list);
     }
@@ -43,13 +43,13 @@ Mongo.getObjectWithUID = function(uid, cb){
     if(err){
       cb({
         'verb': 'GET',
-        'url': 'http://localhost:3000/api/objects/' + uid,
+        'url': '/api/objects/' + uid,
         'message': err.message
       }, null);
     } else if(!result.hasOwnProperty('_id')){
       cb({
         'verb': 'GET',
-        'url': 'http://localhost:3000/api/objects/' + uid,
+        'url': '/api/objects/' + uid,
         'message': 'Could not find object with specified UID'
       }, null);
     } else {
@@ -63,7 +63,7 @@ Mongo.createObject = function(obj, cb){
     if(err){
       cb({
           'verb': 'POST',
-          'url': 'http://localhost:3000/api/objects',
+          'url': '/api/objects',
           'message': err.message
       }, null);
     } else {
@@ -77,13 +77,13 @@ Mongo.updateObject = function(uid, obj, cb){
     if(err){
       cb({
         'verb': 'PUT',
-        'url': 'http://localhost:3000/api/objects/' + uid,
+        'url': '/api/objects/' + uid,
         'message': err.message
       }, null);
     } else if(result.result.nModified != 1){
       cb({
         'verb': 'PUT',
-        'url': 'http://localhost:3000/api/objects/' + uid,
+        'url': '/api/objects/' + uid,
         'message': 'There is no object with the specified UID.'
       });
     } else {
@@ -99,17 +99,17 @@ Mongo.deleteObject = function(uid, cb){
     if(err){
       cb({
         'verb': 'DELETE',
-        'url': 'http://localhost:3000/api/objects/' + uid,
+        'url': '/api/objects/' + uid,
         'message': err.message
       });
-    } else if(r.result.n == 0) {
+    } else if(r.result.n == 1) {
+      cb(null);
+    } else {
       cb({
         'verb': 'DELETE',
-        'url': 'http://localhost:3000/api/objects/' + uid,
+        'url': '/api/objects/' + uid,
         'message': 'There is no object with the specified UID to delete.'
       });
-    } else {
-      cb(null);
     }
   });
 };
