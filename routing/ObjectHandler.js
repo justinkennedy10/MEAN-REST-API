@@ -38,7 +38,11 @@ router.post('/', function(req, res){
 
 router.put('/:uid', function(req, res){
   database.updateObject(req.params.uid, req.body, function(err, obj){
-    res.json(err || obj);
+    if(err){
+      res.json(err);
+    } else {
+      res.json(obj);
+    }
   });
 });
 
