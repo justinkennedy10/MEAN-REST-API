@@ -1,17 +1,17 @@
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
-echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 
-sudo apt-get update
+apt-get update
 
-sudo apt-get install -y mongodb-org
+apt-get install -y mongodb-org
 
-sudo service mongod start
+service mongod start
 
-sudo apt-get update
+apt-get update
 
-sudo apt-get install nodejs
+apt-get install nodejs
 
-sudo apt-get install npm
+apt-get install npm
 
 node server.js
