@@ -1,8 +1,8 @@
 /*
 TODO
 fix mongo error handling and stuff
-angular web app
 tests
+make script for start
 */
 
 var winston = require('winston');
