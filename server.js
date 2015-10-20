@@ -1,9 +1,3 @@
-/*
-TODO
-fix mongo error handling and stuff
-tests
-*/
-
 var winston = require('winston');
 var express = require('express');
 

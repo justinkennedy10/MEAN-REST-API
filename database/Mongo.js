@@ -118,7 +118,7 @@ Mongo.deleteObject = function(uid, cb){
   });
 };
 
-Mongo.clearDatabse = function(cb){
+Mongo.clearDatabase = function(cb){
   objects.drop(cb);
 }
 
