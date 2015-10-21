@@ -14,4 +14,4 @@ apt-get install nodejs
 
 apt-get install npm
 
-node server.js
+nodejs server.js

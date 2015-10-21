@@ -50,7 +50,7 @@ Mongo.getObjectWithUID = function(uid, cb){
         'url': '/api/objects/' + uid,
         'message': err.message
       }, null);
-    } else if(!result.hasOwnProperty('_id')){
+    } else if(result && !result.hasOwnProperty('_id')){
       cb({
         'verb': 'GET',
         'url': '/api/objects/' + uid,
@@ -119,7 +119,7 @@ Mongo.deleteObject = function(uid, cb){
 };
 
 Mongo.clearDatabase = function(cb){
-  objects.drop(cb);
-}
+  setTimeout(function(){objects.drop(cb)}, 0);
+};
 
 module.exports = Mongo;
